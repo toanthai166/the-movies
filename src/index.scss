@@ -157,21 +157,11 @@
     .page-container {
       .pages {
         position: relative;
-        // .input-search {
-        //   input {
-        //     @apply ml-2;
-        //     width: 300px;
-        //     height: 30px;
-        //   }
-        // }
-        // .btn-search {
-        //   @apply top-0 right-0 -translate-x-[40px] h-[40px] -translate-y-[5px];
-        // }
       }
       .pages-items {
         @apply grid grid-cols-4 gap-y-10;
         .movie-list {
-          @apply w-[270px] p-5 h-[500px];
+          @apply w-[270px] h-[500px] p-5;
           .movie-card {
             @apply flex flex-col justify-center h-full;
             img {
@@ -182,42 +172,6 @@
       }
     }
     .page-details {
-      // .page-detail {
-      //   @apply flex flex-col relative  h-full;
-      //   img {
-      //     @apply top-0 h-[400px] object-cover p-5 rounded-lg  w-full;
-      //   }
-
-      //   .text-detail {
-      //     @apply mb-10;
-      //     h2 {
-      //       @apply z-50 top-0 bg-transparent;
-      //     }
-      //   }
-      //   .describe {
-      //     @apply bg-transparent text-base top-0;
-      //   }
-      //   .cats {
-      //     @apply w-full block;
-      //   }
-      //   .status {
-      //     span {
-      //       @apply text-xs;
-      //     }
-      //     .icon {
-      //       @apply h-[40px] px-1;
-      //     }
-      //     .votes {
-      //       h2 {
-      //         @apply text-lg;
-      //       }
-      //       span {
-      //         @apply text-lg;
-      //       }
-      //     }
-      //     @apply z-50 text-base bottom-0;
-      //   }
-      // }
       .videos {
         @apply p-5 rounded-2xl;
         .video {
@@ -309,13 +263,13 @@
           }
         }
         .btn-search {
-          @apply top-0 right-0 -translate-x-[40px] h-[40px] -translate-y-[5px];
+          @apply top-0 -translate-x-[40px] h-[40px] -translate-y-[5px] right-0;
         }
       }
       .pages-items {
         @apply grid grid-cols-1 gap-y-10;
         .movie-list {
-          @apply w-full p-5 h-[500px];
+          @apply w-full h-[500px] p-5;
           .movie-card {
             @apply flex flex-col justify-center h-full;
             img {
@@ -459,13 +413,13 @@
           }
         }
         .btn-search {
-          @apply top-0 right-0 -translate-x-[40px] h-[40px] -translate-y-[5px];
+          @apply -translate-x-[40px] h-[40px] -translate-y-[5px]  top-0 right-0;
         }
       }
       .pages-items {
         @apply grid grid-cols-3 gap-5;
         .movie-list {
-          @apply w-[270px] p-5 h-[90%];
+          @apply w-[270px] h-[90%] p-5;
           .movie-card {
             @apply flex flex-col justify-center h-full;
             img {
