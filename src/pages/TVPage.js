@@ -2,8 +2,44 @@ import React, { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import TVCard from "../components/movie/TVCard";
 import { fetcher } from "../config";
+import styled from "styled-components";
+const MoviePageStyles = styled.div`
+  padding: 0 10px;
+  h2 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    text-transform: capitalize;
+  }
 
-const TVPage = ({ name = "movie", type = "popular" }) => {
+  @media only screen and (max-width: 1024px) {
+    .pages-items {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media only screen and (max-width: 760px) {
+    .input-search input {
+      width: 60%;
+      height: 30px;
+    }
+    .btn-search {
+      top: 0;
+      right: 30%;
+      height: 40px;
+    }
+    .btn-search svg {
+      transform: translateY(-4px);
+    }
+    .pages-items {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+`;
+
+const TVPage = ({ name = "movie", type = "popular", solution = 4000 }) => {
   const inputRef = useRef();
   const [url, setUrl] = useState(
     `https://api.themoviedb.org/3/${name}/${type}?api_key=31e30b916b89f4bfc38509914299c466`
@@ -29,10 +65,8 @@ const TVPage = ({ name = "movie", type = "popular" }) => {
 
   const movies = data?.results || [];
   return (
-    <div className=" page-container">
-      <h2 className="text-center text-3xl capitalize font-semibold mb-10">
-        {name}
-      </h2>
+    <MoviePageStyles className=" page-container mb-20">
+      <h2>{name}</h2>
       <div className="flex mb-10 pages relative">
         <div className="input-search flex-1  ">
           <input
@@ -75,7 +109,7 @@ const TVPage = ({ name = "movie", type = "popular" }) => {
           </div>
         )}
       </div>
-    </div>
+    </MoviePageStyles>
   );
 };
 

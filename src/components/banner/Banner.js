@@ -1,63 +1,215 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/scss";
 import useSWR from "swr";
 import { fetcher, tmdbAPI } from "../../config";
+import styled from "styled-components";
+const BannerStyles = styled.div`
+  margin: 60px 0;
+  opacity: 0.999;
+  .banner {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+  }
+  .banner > img {
+    object-fit: cover;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .banner .poster {
+    object-fit: cover;
+    border-radius: 8px;
+    width: 100%;
+    height: 500px;
+  }
+  .banner-item {
+    position: absolute;
+    top: 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    left: 5%;
+    gap: 60px;
+  }
+
+  .content {
+    padding: 0 40px;
+    width: 65%;
+    height: 100%;
+  }
+  .content .title {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .content .overview {
+    font-size: 18px;
+    width: 600px;
+    margin: 0 auto;
+    display: inline-block;
+  }
+  .content .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  .content .btn button {
+    border: 1px solid;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 400;
+  }
+  .content .btn .now {
+    background-color: rgb(255, 0, 0);
+    transition: all 0.3s linear 0s;
+    box-shadow: rgba(255, 0, 0, 0.3) 0px 0px 7px 8px;
+    margin-right: 20px;
+    :hover {
+      box-shadow: rgba(255, 0, 0, 0.3) 0px 0px 14px 15px;
+    }
+  }
+  .content .btn .trailer {
+    transition: all 0.3s linear 0s;
+    :hover {
+      background: white;
+      color: rgb(255, 0, 0);
+    }
+  }
+  .banner-img {
+    width: 35%;
+    height: 420px;
+    margin-right: 40px;
+  }
+  .banner-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  @media only screen and (max-width: 1024px) {
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0;
+    }
+    .content .title {
+      font-size: 18px;
+      text-align: center;
+    }
+    .banner-img {
+      /* display: none; */
+    }
+  }
+  @media only screen and (max-width: 760px) {
+    .banner-item {
+      display: flex;
+      width: 100%;
+      padding: 20px 10px;
+      left: 0;
+      flex-direction: column;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 0px 0px;
+    }
+    .content .overview {
+      width: 100%;
+      padding: 0 20px;
+      height: 194px;
+      overflow: hidden;
+      -webkit-line-clamp: 3;
+      text-overflow: ellipsis;
+    }
+    .content .title {
+      font-size: 22px;
+      text-align: center;
+    }
+    .banner-img {
+      display: none;
+    }
+    .btn {
+      display: flex;
+      flex-direction: column;
+      row-gap: 5px;
+      gap: 20px;
+    }
+    .btn .now {
+      margin-left: 20px;
+    }
+  }
+`;
 
 const Banner = ({ name = "movie", type = "now_playing" }) => {
   const { data } = useSWR(tmdbAPI.getTvList(name, type), fetcher);
-
+  console.log(data);
   const movies = data?.results || [];
+
   return (
-    <section className="banner h-[500px] page-container mb-10 ">
-      <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
-        {movies.length > 0 &&
-          movies.map((item) => (
-            <SwiperSlide key={item.id}>
-              <BannerItem item={item}></BannerItem>
-            </SwiperSlide>
-          ))}
-      </Swiper>
-    </section>
+    <BannerStyles>
+      <section className="page-container">
+        <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
+          {movies.length > 0 &&
+            movies.map((item) => (
+              <SwiperSlide key={item.id}>
+                <BannerItem item={item}></BannerItem>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </section>
+    </BannerStyles>
   );
 };
 
 function BannerItem({ item, name, id }) {
-  const { title, overview, poster_path, backdrop_path } = item;
+  console.log(item);
   const navigate = useNavigate();
+  if (!item) return null;
+  const { title, overview, poster_path, backdrop_path } = item;
+
   return (
-    <div className="w-full h-full rounded-lg relative">
-      <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg max-w-[1280px]"></div>
+    <div className="banner">
+      <div className="overlay"></div>
+
       <img
         src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`}
         alt=""
-        className="poster w-full h-[500px] object-cover rounded-lg"
+        className="poster"
       />
-      <div className="absolute left-5 gap-x-20 flex justify-between items-center bottom-10 w-full">
-        <div className="items-banner px-10">
-          <h2 className="title font-bold text-3xl text-center mb-5">{title}</h2>
-          <span className=" overview inline-block text-lg mb-5  w-[600px] mx-auto">
-            {overview}
-          </span>
-          <div className="btn flex items-center justify-center gap-x-5">
+      <div className="banner-item">
+        <div className="content">
+          <h2 className="title">{title}</h2>
+          <span className=" overview ">{overview}</span>
+          <div className="btn">
             <button
+              className="now"
               onClick={() => navigate(`/movie/${item.id}`)}
-              className="btn-trailer border bg-red-600 font-medium text-white rounded-full py-3 px-6"
             >
               Watch Now
             </button>
-            <button className="btn-trailers border-2 font-medium bg-transition text-white transition-all  hover:ease-out duration-300 hover:bg-white hover:text-red-600  rounded-full py-3 px-6">
-              Watch Trailer
-            </button>
+            <button className="trailer">Watch Trailer</button>
           </div>
         </div>
-        <div className="w-[270px] h-[420px] mr-40 ">
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            alt=""
-            className="logo-banner w-full h-full object-cover rounded-lg"
-          />
+        <div className="banner-img">
+          <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt="" />
         </div>
       </div>
     </div>

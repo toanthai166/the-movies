@@ -27,7 +27,7 @@ function App() {
           ></Route>
           <Route
             path="/tv"
-            element={<TVPage name="tv" type="popular"></TVPage>}
+            element={<TVPage name="tv" type="top_rated"></TVPage>}
           ></Route>
           <Route
             path="/movie/:Id"

@@ -7,7 +7,6 @@ import TVCard from "./TVCard";
 
 const TVList = ({ name = "movie", type = "now_playing" }) => {
   const { data } = useSWR(tmdbAPI.getTvList(name, type), fetcher);
-  // console.log(data);
 
   const movies = data?.results || [];
   return (
