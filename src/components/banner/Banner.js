@@ -159,8 +159,22 @@ const BannerStyles = styled.div`
 `;
 
 const Banner = ({ name = "movie", type = "now_playing" }) => {
+  const arr = [
+    [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+    [40, 41, 37, 43, 44, 45, 46, 33, 48, 49, 50],
+  ];
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; i < arr.length; i++) {
+      let count = 0;
+      if (arr[i] === arr[j]) {
+        count = count + 2;
+      }
+      console.log(count);
+      return count;
+    }
+  }
+
   const { data } = useSWR(tmdbAPI.getTvList(name, type), fetcher);
-  console.log(data);
   const movies = data?.results || [];
 
   return (
@@ -180,7 +194,6 @@ const Banner = ({ name = "movie", type = "now_playing" }) => {
 };
 
 function BannerItem({ item, name, id }) {
-  console.log(item);
   const navigate = useNavigate();
   if (!item) return null;
   const { title, overview, poster_path, backdrop_path } = item;

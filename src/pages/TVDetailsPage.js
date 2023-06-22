@@ -155,7 +155,8 @@ const TVDetailsPage = ({ names = "tv", type }) => {
       <div className="page-detail top page-container">
         <span>Home > Movies > {title}</span>
       </div>
-      <Video></Video>
+      {/* <Video></Video> */}
+      <TvVideos names={names}></TvVideos>
       <div className="page-detail page-container ">
         <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt="" />
 
@@ -241,7 +242,7 @@ const TVDetailsPage = ({ names = "tv", type }) => {
           </div>
         </div>
       </div>
-      <TvVideos names={names}></TvVideos>
+
       <MovieSimilar names={names}></MovieSimilar>
     </DetailPageStyles>
   );
